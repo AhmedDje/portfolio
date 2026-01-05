@@ -330,24 +330,28 @@
                                     <input type="text" name="user_name" placeholder="Enter Your Name" required>
                                   </div>
                                 </div>
+                        
                                 <!-- الرقم -->
                                 <div class="col-lg-6">
                                   <div class="form-clt">
                                     <input type="text" name="user_number" placeholder="Enter Your Number" required>
                                   </div>
                                 </div>
+                        
                                 <!-- الايميل -->
                                 <div class="col-lg-12">
                                   <div class="form-clt">
                                     <input type="email" name="user_email" placeholder="Enter Your Email" required>
                                   </div>
                                 </div>
+                        
                                 <!-- الرسالة -->
                                 <div class="col-lg-12">
                                   <div class="form-clt">
                                     <textarea name="message" placeholder="Enter Your Messanger" required></textarea>
                                   </div>
                                 </div>
+                        
                                 <!-- اختيار الميزانية -->
                                 <div class="col-lg-12">
                                   <div class="form-clt">
@@ -364,11 +368,10 @@
                                     </div>
                                   </div>
                                 </div>
+                        
                                 <!-- زر الإرسال -->
                                 <div class="col-lg-12">
-                                  <button type="submit" class="theme-btn">
-                                    send message <i class="fa-solid fa-arrow-up-right"></i>
-                                  </button>
+                                  <button type="submit" class="theme-btn">send message <i class="fa-solid fa-arrow-up-right"></i></button>
                                 </div>
                               </div>
                             </form>
@@ -379,34 +382,39 @@
                         </div>
                         
                         <!-- EmailJS SDK + كود الإرسال -->
-                        <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
-                        <script type="text/javascript">
-                          emailjs.init("LO4AnvpB_e94uZ4uY");
+                        <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+                        <script>
+                          (function(){
+                            emailjs.init("LO4AnvpB_e94uZ4uY");
+                          })();
                         
-                          document.getElementById('contact-form').addEventListener('submit', function(event) {
+                          const contactForm = document.getElementById('contact-form');
+                          const formMsg = document.getElementById('form-message');
+                        
+                          contactForm.addEventListener('submit', function(event){
                             event.preventDefault();
                         
                             emailjs.sendForm('service_zwxofca', 'template_7fgvllk', this)
-                              .then(function() {
-                                const msg = document.getElementById('form-message');
-                                msg.innerText = "تم إرسال الرسالة بنجاح!";
-                                msg.style.color = "white";
-                                msg.style.font = "inherit";
+                              .then(() => {
+                                formMsg.innerText = "تم إرسال الرسالة بنجاح!";
+                                formMsg.style.color = "white";
+                                formMsg.style.font = "inherit";
                         
-                                document.getElementById('contact-form').reset();
+                                contactForm.reset();
                         
-                                // اختفاء الرسالة بعد 3 ثواني
-                                setTimeout(() => { msg.innerText = ""; }, 3000);
+                                setTimeout(() => { formMsg.innerText = ""; }, 3000);
+                              })
+                              .catch((error) => {
+                                formMsg.innerText = "حدث خطأ أثناء الإرسال، يرجى المحاولة لاحقًا.";
+                                formMsg.style.color = "red";
+                                formMsg.style.font = "inherit";
                         
-                              }, function(error) {
-                                const msg = document.getElementById('form-message');
-                                msg.innerText = "حدث خطأ أثناء الإرسال، يرجى المحاولة لاحقًا.";
-                                msg.style.color = "red";
-                                msg.style.font = "inherit";
+                                setTimeout(() => { formMsg.innerText = ""; }, 3000);
                         
-                                setTimeout(() => { msg.innerText = ""; }, 3000);
-                                console.error(error);
+                                console.error("EmailJS error:", error);
                               });
+                        
+                            return false; // منع إعادة التحميل
                           });
                         </script>
         </section>
