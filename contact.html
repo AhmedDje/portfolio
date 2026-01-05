@@ -378,32 +378,43 @@
                                 </div>
                             
                                 <!-- رسالة النجاح -->
-                                <div id="form-message" style="margin-top:15px;color:green;"></div>
-                              </form>
-                            </div>
-                            
-                            <!-- EmailJS SDK -->
-                            <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
-                            <script type="text/javascript">
-                              emailjs.init("LO4AnvpB_e94uZ4uY");
-                            
-                              document.getElementById('contact-form').addEventListener('submit', function(event) {
-                                event.preventDefault(); // منع إعادة تحميل الصفحة
-                            
-                                emailjs.sendForm('service_zwxofca', 'template_7fgvllk', this)
-                                  .then(function() {
-                                    document.getElementById('form-message').innerText = "تم إرسال الرسالة بنجاح!";
-                                    document.getElementById('contact-form').reset(); 
-                                  }, function(error) {
-                                    document.getElementById('form-message').innerText = "حدث خطأ أثناء الإرسال، يرجى المحاولة لاحقًا.";
-                                    console.error(error);
+                                <div id="form-message" style="margin-top:15px; color:white; font: inherit;"></div>
+                                
+                                <script type="text/javascript">
+                                  emailjs.init("LO4AnvpB_e94uZ4uY");
+                                
+                                  document.getElementById('contact-form').addEventListener('submit', function(event) {
+                                    event.preventDefault();
+                                
+                                    emailjs.sendForm('service_zwxofca', 'template_7fgvllk', this)
+                                      .then(function() {
+                                        const msg = document.getElementById('form-message');
+                                        msg.innerText = "تم إرسال الرسالة بنجاح!";
+                                        msg.style.color = "white";  // اللون أبيض
+                                        msg.style.font = "inherit"; // نفس خط وحجم الفورم
+                                
+                                        document.getElementById('contact-form').reset(); 
+                                
+                                        // اختفاء الرسالة بعد 3 ثواني
+                                        setTimeout(() => {
+                                          msg.innerText = "";
+                                        }, 3000);
+                                
+                                      }, function(error) {
+                                        const msg = document.getElementById('form-message');
+                                        msg.innerText = "حدث خطأ أثناء الإرسال، يرجى المحاولة لاحقًا.";
+                                        msg.style.color = "red";
+                                        msg.style.font = "inherit";
+                                
+                                        // اختفاء رسالة الخطأ بعد 3 ثواني
+                                        setTimeout(() => {
+                                          msg.innerText = "";
+                                        }, 3000);
+                                
+                                        console.error(error);
+                                      });
                                   });
-                              });
-                            </script>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                                </script>
         </section>
         <div class="contact-inner-section">
             <div class="container">
