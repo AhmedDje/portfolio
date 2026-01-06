@@ -2113,6 +2113,12 @@ h5.preloader-text::after {
     padding: 100px 0 20px;
   }
 }
+
+.footer-wrapper-2 .footer-logo img {
+  width: 481px;
+  height: auto;
+}
+
 @media (max-width: 991px) {
   .footer-wrapper-2 .footer-logo img {
     width: 280px;
