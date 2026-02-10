@@ -321,6 +321,9 @@
 	        spaceBetween: 30,
 	        speed: 1300,
 	        loop: true,
+			// هذه السطور تجعل الأزرار لا تتعطل أبدًا
+		    allowSlideNext: true,
+		    allowSlidePrev: true,
 	        slidesPerView: 2,
 	        slidesPerGroup: 1,
 	        autoplay: {
