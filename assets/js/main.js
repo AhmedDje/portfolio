@@ -1767,7 +1767,7 @@ text_slider.on('slideChangeTransitionStart', function () {
             const $el = $("#typing-text");
             if (!$el.length) return; // stop if element not exist
 
-            const words = ["s. graphic designer", "packaging designer", "Brand Designer"];
+            const words = ["sr. graphic designer", "packaging designer", "Brand Designer"];
             let index = 0;
             let letterIndex = 0;
             let isDeleting = false;
