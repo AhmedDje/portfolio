@@ -123,128 +123,65 @@
         <div id="smooth-wrapper">
             <div id="smooth-content">
                  <!-- News Section Start -->
-        <section class="news-grid-section1 fix pb-0">
-            <div class="container">
-               <h1 class="hero_title tv_hero_title hero_title_1">Contact for Collaboration</h1>
-            </div>
-        </section>
-
-        <section class="contact-inner-page-wrapper fix pb-5 pb-xl-0">
-            <div class="container">
-                <div class="contact-inner-page-wrapper1">
-                    <div class="row g-4">
-                        <div class="col-lg-6 d-none d-xl-block">
-                            <div class="contact-image">
-                                <img src="assets/img/inner/contact.png" alt="">
-                                <ul class="float-bob-y">
-                                    <li>
-                                        7+ years of<b> experience </b>
-                                    </li>
-                                    <li>
-                                        Hundreds<b> of successful projects</b>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-xl-6 wow fadeInUp" data-wow-delay=".3s">
-                          <div class="faq-content-items">
-                            <form id="contact-form" class="mt-0 wow fadeInUp" data-wow-delay=".3s">
-                              <div class="row g-4">
-                                <!-- الاسم -->
-                                <div class="col-lg-6">
-                                  <div class="form-clt">
-                                    <input type="text" name="user_name" placeholder="Enter Your Name" required>
-                                  </div>
-                                </div>
-                        
-                                <!-- الرقم -->
-                                <div class="col-lg-6">
-                                  <div class="form-clt">
-                                    <input type="text" name="user_number" placeholder="Enter Your Number" required>
-                                  </div>
-                                </div>
-                        
-                                <!-- الايميل -->
-                                <div class="col-lg-12">
-                                  <div class="form-clt">
-                                    <input type="email" name="user_email" placeholder="Enter Your Email" required>
-                                  </div>
-                                </div>
-                        
-                                <!-- الرسالة -->
-                                <div class="col-lg-12">
-                                  <div class="form-clt">
-                                    <textarea name="message" placeholder="Enter Your Messanger" required></textarea>
-                                  </div>
-                                </div>
-                        
-                                <!-- اختيار الغرض -->
-                                <div class="col-lg-12">
-                                  <div class="form-clt">
-                                    <div class="About-item">
-                                      <h4>Contact About</h4>
-                                      <div class="About-button">
-                                        <button type="button" class="About-btn" onclick="document.getElementById('About').value='Collab'">Collab</button>
-                                        <button type="button" class="About-btn" onclick="document.getElementById('About').value='Project'">Project</button>
-                                        <button type="button" class="About-btn" onclick="document.getElementById('About').value='Feedback'">Feedback</button>
-                                        <button type="button" class="About-btn" onclick="document.getElementById('About').value='other'">other</button>
-                                      </div>
-                                      <input type="hidden" name="About" id="About" value="">
-                                    </div>
-                                  </div>
-                                </div>
-                        
-                                <!-- زر الإرسال -->
-                                <div class="col-lg-12">
-                                  <div style="display: flex; align-items: center; gap: 15px;">
-                                    
-                                    <button type="submit" class="theme-btn">
-                                      send message <i class="fa-solid fa-arrow-up-right"></i>
-                                    </button>
-                                
-                                    <!-- رسالة النجاح -->
-                                    <div id="form-message" style="color:white; font: inherit;"></div>
-                                
-                                  </div>
-                                </div>
-                        
-                        <!-- EmailJS SDK + كود الإرسال -->
-                        <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
-                        <script>
-                          (function(){
-                            emailjs.init("LO4AnvpB_e94uZ4uY");
-                          })();
-                        
-                          const contactForm = document.getElementById('contact-form');
-                          const formMsg = document.getElementById('form-message');
-                        
-                          contactForm.addEventListener('submit', function(event){
-                            event.preventDefault();
-                        
-                            emailjs.sendForm('service_zwxofca', 'template_ht8qqd9', this)
-                              .then(() => {
-                                formMsg.innerText = "Message sent successfully!";
-                                formMsg.style.color = "white";
-                                formMsg.style.font = "inherit";
-                        
-                                contactForm.reset();
-                        
-                                setTimeout(() => { formMsg.innerText = ""; }, 3000);
-                              })
-                              .catch((error) => {
-                                formMsg.innerText = "An error occurred. Please try again later.";
-                                formMsg.style.color = "red";
-                                formMsg.style.font = "inherit";
-                        
-                                setTimeout(() => { formMsg.innerText = ""; }, 3000);
-                        
-                                console.error("EmailJS error:", error);
-                              });
-                        
-                            return false; // منع إعادة التحميل
-                          });
-                        </script>
-        </section>
+            <!-- EmailJS SDK + كود الإرسال -->
+            <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+            
+            <script>
+              (function(){
+                emailjs.init("LO4AnvpB_e94uZ4uY");
+              })();
+            
+              const contactForm = document.getElementById('contact-form');
+              const formMsg = document.getElementById('form-message');
+            
+              // ضع هنا رابط Formspree
+              const FORMSPREE_ENDPOINT = "https://form.typeform.com/to/KUjWHYa2";
+            
+              contactForm.addEventListener('submit', async function(event){
+                event.preventDefault();
+            
+                formMsg.innerText = "Sending...";
+                formMsg.style.color = "white";
+                formMsg.style.font = "inherit";
+            
+                try {
+                  // 1. إرسال الإيميل مثل ما كان يعمل
+                  await emailjs.sendForm('service_zwxofca', 'template_ht8qqd9', contactForm);
+            
+                  // 2. حفظ نفس البيانات في Formspree كـ Database
+                  await fetch(FORMSPREE_ENDPOINT, {
+                    method: "POST",
+                    body: new FormData(contactForm),
+                    headers: {
+                      "Accept": "application/json"
+                    }
+                  });
+            
+                  formMsg.innerText = "Message sent successfully!";
+                  formMsg.style.color = "white";
+                  formMsg.style.font = "inherit";
+            
+                  contactForm.reset();
+            
+                  setTimeout(() => {
+                    formMsg.innerText = "";
+                  }, 3000);
+            
+                } catch (error) {
+                  formMsg.innerText = "An error occurred. Please try again later.";
+                  formMsg.style.color = "red";
+                  formMsg.style.font = "inherit";
+            
+                  setTimeout(() => {
+                    formMsg.innerText = "";
+                  }, 3000);
+            
+                  console.error("Form error:", error);
+                }
+            
+                return false;
+              });
+            </script>
         <div class="contact-inner-section">
             <div class="container">
                 <div class="googpemap-2">
