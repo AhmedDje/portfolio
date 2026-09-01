@@ -12253,3 +12253,57 @@ h5.preloader-text::after {
 .p-relative {
   position: relative;
 }/*# sourceMappingURL=main.css.map */
+
+/* Language switcher */
+.site-language-switcher {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 9999;
+  display: flex;
+  gap: 6px;
+  background: rgba(15, 15, 15, 0.85);
+  padding: 8px;
+  border-radius: 999px;
+  backdrop-filter: blur(6px);
+}
+
+.site-language-switcher .lang-switch-btn {
+  border: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.site-language-switcher .lang-switch-btn.active,
+.site-language-switcher .lang-switch-btn:hover {
+  background: #f95f09;
+  color: #fff;
+}
+
+body.rtl-language {
+  direction: rtl;
+}
+
+body.rtl-language .site-language-switcher {
+  left: 20px;
+  right: auto;
+}
+
+/* Hide default Google translate UI */
+.skiptranslate,
+.goog-te-banner-frame,
+.goog-logo-link {
+  display: none !important;
+}
+
+.goog-te-gadget {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
